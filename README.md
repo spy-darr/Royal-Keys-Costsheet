@@ -5,7 +5,7 @@ Built as a static site — **no server required**. Deploy via GitHub Pages in mi
 
 ---
 
-## 📁 Folder Structure
+## Folder Structure
 
 ```
 royal-keys-costsheet/
@@ -16,15 +16,13 @@ royal-keys-costsheet/
 │   ├── data.js         ← All unit data (residential + commercial)
 │   ├── logo-top.jpg    ← Royal Keys logo (header)
 │   ├── logo-bottom.jpg ← Aurelia Developers logo (footer)
-│   ├── bw_logo.png     ← BeyondWalls logo (footer)
-│   ├── mahalaxmi_logo.png
-│   └── tarangan_logo.png
+│   └── bw_logo.png     ← BeyondWalls logo (footer)
 └── README.md
 ```
 
 ---
 
-## 🚀 Deploy on GitHub Pages
+## Deploy on GitHub Pages
 
 1. Create a new GitHub repository (e.g. `royal-keys-costsheet`)
 2. Upload all files maintaining the folder structure above
@@ -35,9 +33,9 @@ royal-keys-costsheet/
 
 ---
 
-## 🔑 Changing the Password
+## Changing the Password
 
-Open `app.js` and change line 4:
+Open `app.js` and change line 5:
 
 ```js
 const PASSWORD = 'RoyalKeys@2026';
@@ -45,21 +43,21 @@ const PASSWORD = 'RoyalKeys@2026';
 
 ---
 
-## ✨ Features
+## Features
 
-- **Single password login** — no accounts, just one shared code
+- **Single password login** — one shared access code
 - **Residential & Commercial** unit selector with Wing / Floor / Config / Status filters
 - **Live cost recalculation** — change APR → all values update instantly
 - **Reverse calculation** — edit the total package → APR auto-updates
 - **Stamp Duty toggle** — Male (7%) / Female (6%) / Both (6%)
-- **Download PDF** — two-copy (Customer + Sales) formatted cost sheet matching original design
+- **Customer name required** — PDF download blocked until name is entered
+- **Download PDF** — 2-page (Customer's Copy + Sales Copy) cost sheet
 - **Fully static** — works on GitHub Pages, Netlify, Vercel, or any web host
 
 ---
 
-## 📝 Notes
+## Notes
 
-- Password is stored in plain text in `app.js` — this is intentional for a simple client-side site.
-  For higher security, consider adding server-side auth.
+- Password is stored in plain text in `app.js` — intentional for a simple client-side site.
 - Logos must remain in the `assets/` folder relative to `index.html`.
-- Unit data is in `assets/data.js` — update this file if inventory changes.
+- Unit data is in `assets/data.js` — regenerated from the DSR Excel/CSV.
