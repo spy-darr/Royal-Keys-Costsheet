@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Keys - Digital Cost Sheet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="login-overlay">
+        <div class="login-box">
+            <h2>Partner Login</h2>
+            <input type="password" id="pass-input" placeholder="Enter Password">
+            <button onclick="checkPass()">Login</button>
+        </div>
+    </div>
+
+    <div id="main-content" class="hidden">
+        <header>
+            <h1>ROYAL KEYS COST SHEET</h1>
+            <p>MahaRERA: P52100079364</p>
+        </header>
+
+        <section class="controls">
+            <input type="text" id="unit-search" placeholder="Enter Unit No (e.g. 201)">
+            <button onclick="loadUnit()">Load Unit</button>
+        </section>
+
+        <div class="cost-sheet-container">
+            <table class="cost-table">
+                <tr><td>Unit Type</td><td id="disp-type">-</td></tr>
+                <tr><td>Carpet Area (sq.ft)</td><td id="disp-carpet">0</td></tr>
+                <tr class="highlight">
+                    <td><strong>APR (Rate per sq.ft)</strong></td>
+                    <td><input type="number" id="input-apr" oninput="updateByAPR()"></td>
+                </tr>
+                <tr><td>Agreement Value</td><td id="disp-agreement">0</td></tr>
+                <tr><td>Stamp Duty (7%)</td><td id="disp-stamp">0</td></tr>
+                <tr><td>Registration</td><td>30,000</td></tr>
+                <tr><td>GST (<span id="gst-rate">0</span>%)</td><td id="disp-gst">0</td></tr>
+                <tr class="total-row">
+                    <td><strong>Final Package (Total)</strong></td>
+                    <td><input type="number" id="input-total" oninput="updateByTotal()"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
