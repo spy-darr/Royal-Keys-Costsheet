@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Royal Keys — Cost Sheet</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ═══════════════════════════  LOGIN  ═══════════════════════════ -->
+<div id="login-screen" class="screen active">
+  <div class="login-bg">
+    <div class="login-particles"></div>
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="assets/logo-top.jpg" alt="Royal Keys" />
+      </div>
+      <h2 class="login-title">COST SHEET PORTAL</h2>
+      <p class="login-sub">Enter your access code to continue</p>
+      <div class="input-wrap">
+        <label>Access Code</label>
+        <input id="pwd-input" type="password" placeholder="••••••••" autocomplete="off" />
+      </div>
+      <button id="login-btn" class="btn-gold">ENTER</button>
+      <p id="login-error" class="error-msg"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════  APP  ═══════════════════════════ -->
+<div id="app-screen" class="screen">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <img src="assets/logo-top.jpg" alt="Royal Keys" class="header-logo" />
+      <div class="header-title">
+        <span class="project-label">ROYAL KEYS</span>
+        <span class="project-sub">Charholi Budruk · Wagholi · Pune</span>
+      </div>
+      <button id="logout-btn" class="btn-logout">LOGOUT</button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-container">
+
+    <!-- STEP 1: TYPE TOGGLE -->
+    <section class="section-card step-card" id="step1">
+      <div class="step-label">STEP 1</div>
+      <h3 class="step-title">Property Type</h3>
+      <div class="toggle-group">
+        <button class="toggle-btn active" data-type="Residential" id="btn-residential">
+          <span class="toggle-icon">🏠</span> Residential
+        </button>
+        <button class="toggle-btn" data-type="Commercial" id="btn-commercial">
+          <span class="toggle-icon">🏢</span> Commercial
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 2: UNIT SELECTOR -->
+    <section class="section-card step-card" id="step2">
+      <div class="step-label">STEP 2</div>
+      <h3 class="step-title">Select Unit</h3>
+      <div class="filter-row">
+        <div class="filter-group">
+          <label>Wing</label>
+          <select id="filter-wing">
+            <option value="">All Wings</option>
+            <option value="A">A Wing</option>
+            <option value="B">B Wing</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Floor</label>
+          <select id="filter-floor">
+            <option value="">All Floors</option>
+          </select>
+        </div>
+        <div class="filter-group" id="config-filter-wrap">
+          <label>Configuration</label>
+          <select id="filter-config">
+            <option value="">All</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Status</label>
+          <select id="filter-status">
+            <option value="">All</option>
+            <option value="unsold">Unsold</option>
+            <option value="sold">Sold</option>
+          </select>
+        </div>
+      </div>
+      <div class="unit-grid" id="unit-grid"></div>
+    </section>
+
+    <!-- STEP 3: COST SHEET -->
+    <section class="section-card step-card" id="step3" style="display:none">
+      <div class="step-label">STEP 3</div>
+      <h3 class="step-title">Cost Sheet</h3>
+
+      <div class="cs-top-row">
+        <div class="cs-field-group">
+          <label>Customer Name</label>
+          <input id="customer-name" type="text" placeholder="Enter customer name" />
+        </div>
+        <div class="cs-field-group">
+          <label>Date</label>
+          <input id="cs-date" type="date" />
+        </div>
+      </div>
+
+      <!-- UNIT INFO PANEL -->
+      <div class="unit-info-panel">
+        <div class="info-tile">
+          <span class="info-label">Unit No</span>
+          <span class="info-val" id="info-unit">—</span>
+        </div>
+        <div class="info-tile">
+          <span class="info-label">Wing / Floor</span>
+          <span class="info-val" id="info-wing-floor">—</span>
+        </div>
+        <div class="info-tile">
+          <span class="info-label">Configuration</span>
+          <span class="info-val" id="info-config">—</span>
+        </div>
+        <div class="info-tile">
+          <span class="info-label">Carpet Area (sq.ft.)</span>
+          <span class="info-val" id="info-carpet">—</span>
+        </div>
+        <div class="info-tile">
+          <span class="info-label">Saleable Area (sq.ft.)</span>
+          <span class="info-val" id="info-saleable">—</span>
+        </div>
+        <div class="info-tile highlight">
+          <span class="info-label">GST Rate</span>
+          <span class="info-val" id="info-gst-rate">—</span>
+        </div>
+      </div>
+
+      <!-- COST TABLE -->
+      <div class="cost-table-wrap">
+        <table class="cost-table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Rate / Details</th>
+              <th>Amount (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row-agreement">
+              <td>Agreement Value</td>
+              <td>
+                <div class="rate-edit-row">
+                  APR: ₹
+                  <input id="apr-input" type="number" class="inline-input" min="1000" step="50"/>
+                  / sq.ft.
+                </div>
+              </td>
+              <td class="amt-cell" id="amt-agreement">—</td>
+            </tr>
+            <tr>
+              <td id="sd-label">Stamp Duty (7%)</td>
+              <td>
+                <select id="sd-gender" class="inline-select">
+                  <option value="male">Male (7%)</option>
+                  <option value="female">Female (6%)</option>
+                  <option value="both">Both (6%)</option>
+                </select>
+              </td>
+              <td class="amt-cell" id="amt-sd">—</td>
+            </tr>
+            <tr>
+              <td>Registration Charges</td>
+              <td>Fixed</td>
+              <td class="amt-cell">₹30,000</td>
+            </tr>
+            <tr>
+              <td id="gst-label">GST</td>
+              <td id="gst-detail">—</td>
+              <td class="amt-cell" id="amt-gst">—</td>
+            </tr>
+            <tr class="row-total">
+              <td colspan="2">ALL INCLUSIVE TOTAL</td>
+              <td class="amt-cell total-amt" id="amt-total">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TOTAL EDIT ROW -->
+      <div class="total-edit-panel">
+        <div class="tep-label">💡 Edit Total Package ↔ APR auto-updates</div>
+        <div class="tep-row">
+          <span>₹</span>
+          <input id="total-input" type="number" class="total-edit-input" placeholder="Enter total package" />
+          <button class="btn-gold small" id="apply-total-btn">APPLY</button>
+        </div>
+      </div>
+
+      <p class="words-line" id="words-line"></p>
+
+      <!-- TERMS -->
+      <div class="terms-block">
+        <div class="terms-title">TERMS & CONDITIONS</div>
+        <ol class="terms-list" id="terms-list"></ol>
+      </div>
+
+      <div class="action-row">
+        <button class="btn-outline" id="back-btn">← Change Unit</button>
+        <button class="btn-gold" id="download-btn">⬇ Download PDF</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <img src="assets/logo-bottom.jpg" alt="Aurelia Developers" class="footer-logo" />
+      <div class="footer-center">
+        <span>MAHA-RERA Reg. No. P52100079364</span>
+        <span>Contact: 080 6591 7414</span>
+        <span>Dikshita Dak – 94619 30679 &nbsp;|&nbsp; Kartik Patil – 99213 84868</span>
+      </div>
+      <img src="assets/bw_logo.png" alt="BeyondWalls" class="footer-logo bw" />
+    </div>
+  </footer>
+
+</div><!-- /app-screen -->
+
+<script src="assets/data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
